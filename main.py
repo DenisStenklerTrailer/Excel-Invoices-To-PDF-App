@@ -27,12 +27,15 @@ for filepath in filepaths:
     columns = df.columns
     columns = [item.replace("_"," ").title() for item in columns]
     # print(list(df.columns) vrne nam stoplce v excelu oz. imena stolpcev
+
+    # FIRST LINE
     pdf.cell(w=30, h=8, txt=columns[0], border=1, align='C')
     pdf.cell(w=60, h=8, txt=columns[1], border=1, align='C')
     pdf.cell(w=40, h=8, txt=columns[2], border=1, align='C')
     pdf.cell(w=30, h=8, txt=columns[3], border=1, align='C')
     pdf.cell(w=30, h=8, txt=columns[4], border=1, align='C', ln=1)
 
+    # OTHER LINES
     for index, row in df.iterrows():
         pdf.set_font(family="Times", size=12)
         pdf.cell(w=30, h=8, txt=str(row["product_id"]), border=1, align='C')
@@ -40,5 +43,19 @@ for filepath in filepaths:
         pdf.cell(w=40, h=8, txt=str(row["amount_purchased"]), border=1, align='C')
         pdf.cell(w=30, h=8, txt=str(row["price_per_unit"]), border=1, align='C')
         pdf.cell(w=30, h=8, txt=str(row["total_price"]), border=1, align='C', ln=1)
+
+    # LAST LINE where we show sum of all $
+    pdf.cell(w=30, h=8, txt='', border=1, align='C')
+    pdf.cell(w=60, h=8, txt='', border=1, align='C')
+    pdf.cell(w=40, h=8, txt='', border=1, align='C')
+    pdf.cell(w=30, h=8, txt='', border=1, align='C')
+    pdf.cell(w=30, h=8, txt=str(df['total_price'].sum()), border=1, align='C', ln=1)
+
+    # FOOTER
+    pdf.set_font(family="Times", size=12, style="B")
+    pdf.cell(w=50, h=20, txt=f"The total price is: {str(df['total_price'].sum())}", ln=1)
+    pdf.set_font(family="Times", size=12, style="B")
+    pdf.cell(w=25, h=8, txt="Python How")
+    pdf.image("pythonhow.png", w=10)
 
     pdf.output(f"PDFs/{filename}.pdf")
