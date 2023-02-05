@@ -9,7 +9,7 @@ filepaths = glob.glob("invoices/*xlsx")
 
 for filepath in filepaths:
     df = pd.read_excel(filepath, sheet_name="Sheet 1") # Sheet_name je ime lista v Excelu
-    pdf = FPDF(orientation="P", unit="mm", format="A4")
+    pdf = FPDF(orientation="P", unit="mm", format="A4") # Creating PDF document
     pdf.add_page()
 
     filename = Path(filepath).stem # to nam vrne samo ime datoteke npr "10001-2023.1.18.xlsx"
