@@ -6,9 +6,8 @@ pdf = FPDF(orientation="P", unit="mm", format="A4")
 
 filepaths = glob.glob("*txt")
 
-print(filepaths)
-
 for filepath in filepaths:
+
     pdf.add_page()
     print(filepath)
 
@@ -16,6 +15,12 @@ for filepath in filepaths:
     print(title)
 
     pdf.set_font(family="Times", style="B", size=14)
-    pdf.cell(w=10, h=10, txt=title.capitalize())
+    pdf.cell(w=10, h=10, txt=title.capitalize(), ln=1)
+
+    with open(filepath, "r") as file:
+        data = file.read()
+
+    pdf.set_font(family="Times", size=10)
+    pdf.multi_cell(w=190, h=7, txt=data)
 
 pdf.output("PDF_Template.pdf")
